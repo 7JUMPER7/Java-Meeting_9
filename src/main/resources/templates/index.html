@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cities</title>
+
+    <link th:replace="fragments/header :: header-css"/>
+
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+<div class="container">
+
+    <h1>Города</h1>
+    <a href="/add" class="btn btn-success">Добавить город</a>
+    <br>
+    <form method="get" action="/search">
+        <h1>Поиск</h1>
+        <label>Название города: 
+            <input type="text" name="name" placeholder="Название">
+        </label>
+        <label>Кол-во жителей: 
+            <input type="text" name="citizens" placeholder="Кол-во жителей">
+        </label>
+        <label>Слово в истории:
+            <input type="text" name="story" placeholder="Слово в истории">
+        </label>
+        <input type="submit" value="Найти">
+    </form>
+    <br>
+
+    <div class="container" th:each="city : ${cities}">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title" th:text="'Id: ' + ${city.getId()}"></h5>
+                <h3 class="card-text" th:text="'Название: ' + ${city.getName()}"></h3>
+                <p class="card-text" th:text="'Население: ' + ${city.getCitizens()} + ' человек'"></p>
+                <p class="card-text" th:text="'История: ' + ${city.getStory()}"></p>
+                <p class="card-text" th:text="'Координаты: ' + ${city.getCoordinates()}"></p>
+                <div class="container">
+                    <a th:href="@{'/edit/' + ${city.getId()}}" class="btn btn-warning">Редактировать</a>
+                    <a th:href="@{'/delete/' + ${city.getId()}}" class="btn btn-danger">Удалить</a>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+
+</div>
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>
